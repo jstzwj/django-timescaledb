@@ -77,7 +77,7 @@ class TimescaleSchemaEditor(DatabaseSchemaEditor):
         for i, (key, value) in enumerate(kwargs.items()):
             args += key
             args += " => "
-            args += value
+            args += str(value)
             if i != len(kwargs) - 1:
                 args += ","
         return args
@@ -99,7 +99,7 @@ class TimescaleSchemaEditor(DatabaseSchemaEditor):
 
         args = {}
         args['chunk_time_interval'] = 'interval ' + self.quote_value(time_field.interval)
-        args['migrate'] = migrate
+        args['migrate_data'] = migrate
         if partition_field is not None:
             args['partitioning_column'] = self.quote_value(partition_field.column)
             args['number_partitions'] = partition_field.number_partitions
