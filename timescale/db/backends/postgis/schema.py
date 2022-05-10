@@ -32,6 +32,8 @@ class TimescaleSchemaEditor(PostGISSchemaEditor):
     sql_add_hypertable = (
         "SELECT create_hypertable("
         "{table}, {time_column_name}, "
+        "partitioning_column => {partitioning_column}"
+        "number_partitions => {number_partitions}"
         "chunk_time_interval => interval {interval}, "
         "migrate_data => {migrate})"
     )

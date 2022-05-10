@@ -1,4 +1,4 @@
-from django.db.models import DateTimeField
+from django.db.models import DateTimeField, CharField
 
 
 class TimescaleDateTimeField(DateTimeField):
@@ -9,5 +9,16 @@ class TimescaleDateTimeField(DateTimeField):
     def deconstruct(self):
         name, path, args, kwargs = super().deconstruct()
         kwargs['interval'] = self.interval
+
+        return name, path, args, kwargs
+
+class TimescalePartitioningField(CharField):
+    def __init__(self, *args, number_partitions, **kwargs):
+        self.number_partitions = number_partitions
+        super().__init__(*args, **kwargs)
+
+    def deconstruct(self):
+        name, path, args, kwargs = super().deconstruct()
+        kwargs['number_partitions'] = self.number_partitions
 
         return name, path, args, kwargs
