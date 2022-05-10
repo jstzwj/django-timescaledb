@@ -32,7 +32,7 @@ class TimescaleSchemaEditor(DatabaseSchemaEditor):
 
     sql_add_hypertable = (
         "SELECT create_hypertable("
-        "{table}, {partition_column}, "
+        "{table}, {time_column_name}, "
         "chunk_time_interval => interval {interval}, "
         "migrate_data => {migrate})"
     )
@@ -83,7 +83,7 @@ class TimescaleSchemaEditor(DatabaseSchemaEditor):
         # drop primary key of the table
         self._drop_primary_key(model)
 
-        partition_column = self.quote_value(field.column)
+        time_column_name = self.quote_value(field.column)
         interval = self.quote_value(field.interval)
         table = self.quote_value(model._meta.db_table)
         migrate = "true" if should_migrate else "false"
@@ -93,7 +93,7 @@ class TimescaleSchemaEditor(DatabaseSchemaEditor):
             raise NotImplementedError()
         else:
             sql = self.sql_add_hypertable.format(
-                table=table, partition_column=partition_column, interval=interval, migrate=migrate
+                table=table, time_column_name=time_column_name, interval=interval, migrate=migrate
             )
             self.execute(sql)
 
