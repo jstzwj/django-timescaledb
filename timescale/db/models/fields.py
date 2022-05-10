@@ -23,7 +23,7 @@ class TimescalePartitioningCharField(TimescalePartitioningField, CharField):
         CharField.__init__(self, *args, **kwargs)
 
     def deconstruct(self):
-        name, path, args, kwargs = CharField.deconstruct()
+        name, path, args, kwargs = CharField.deconstruct(self)
         kwargs['number_partitions'] = self.number_partitions
 
         return name, path, args, kwargs
@@ -34,7 +34,7 @@ class TimescalePartinioningIntegerField(TimescalePartitioningField, IntegerField
         IntegerField.__init__(self, *args, **kwargs)
 
     def deconstruct(self):
-        name, path, args, kwargs = IntegerField.deconstruct()
+        name, path, args, kwargs = IntegerField.deconstruct(self)
         kwargs['number_partitions'] = self.number_partitions
 
         return name, path, args, kwargs
@@ -45,7 +45,7 @@ class TimescalePartinioningForeignKeyField(TimescalePartitioningField, ForeignKe
         ForeignKey.__init__(self, *args, **kwargs)
 
     def deconstruct(self):
-        name, path, args, kwargs = ForeignKey.deconstruct()
+        name, path, args, kwargs = ForeignKey.deconstruct(self)
         kwargs['number_partitions'] = self.number_partitions
 
         return name, path, args, kwargs
